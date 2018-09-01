@@ -1,0 +1,56 @@
+.Movie{
+    padding: 10px;
+    border: 1px solid #383838;
+    min-height: 210px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.Movie:hover {
+    background: #171717;
+}
+
+.Movie h2{
+    font-size: 1.3em;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.Movie .title{
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
+.Movie .title h2{
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+.Movie .imdb-link i{
+    text-decoration: none;
+    font-size: 2em;
+    color: #f3ce13;
+}
+
+.Movie .imdb-link{
+    text-align: center;
+}
+.Movie .director{
+    text-align: center;
+}
+
+.Movie .topbar{
+    color: #888787;
+    height: 1.3em;
+    overflow: hidden;
+}
+.Movie .topbar .year{
+    float: left;
+
+}
+.Movie .topbar .rating{
+    float: right;
+}
