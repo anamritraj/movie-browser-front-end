@@ -1,6 +1,6 @@
 import React from 'react'
 import './MovieTooltip.css'
-export default ({ movie, display, toolTipLeft, toolTipTop, preventHide, hideToolTip }) => {
+export default ({ movie, display, toolTipLeft, toolTipTop, preventHide, hideToolTip, genreClicked }) => {
     let movieElement = null;
     if (movie) {
         let movieGeneres = movie.genres,
@@ -8,11 +8,11 @@ export default ({ movie, display, toolTipLeft, toolTipTop, preventHide, hideTool
                 return val;
             }),
             styles = {
-                opacity: display? 1 : 0,
+                opacity: display ? 1 : 0,
                 left: toolTipLeft + "px",
                 top: toolTipTop + "px"
             };
-        movieElement = <div className="MovieTooltip" style={styles} onMouseEnter={preventHide} onMouseLeave={hideToolTip}>
+            movieElement = <div className="MovieTooltip" style={styles} onMouseEnter={preventHide} onMouseLeave={hideToolTip}>
             <h2>
                 <a href={movie.movie_imdb_link} target="_blank">{movie.movie_title}</a>
                 {movie.title_year ? <span>({movie.title_year})</span> : null}
@@ -23,7 +23,7 @@ export default ({ movie, display, toolTipLeft, toolTipTop, preventHide, hideTool
                 {movie.country ? <span>{movie.country}</span> : null}
                 {movie.budget ? <span>${parseInt(movie.budget).toLocaleString('en')}</span> : null}
             </p>
-            <p>Genre: {movieGenresArray.map((val) => { return val + ", " })}</p>
+            <p>Genre: {movieGenresArray.map((val) => { return <span key={val} onClick={() => genreClicked(val)} className="movie-genres">{val}</span>})}</p>
             {movie.actor_1_name || movie.actor_2_name ? <p>Actors: {movie.actor_1_name}, {movie.actor_2_name}</p> : null}
             {movie.director_name ? <p>Director: {movie.director_name}</p> : null}
         </div>;

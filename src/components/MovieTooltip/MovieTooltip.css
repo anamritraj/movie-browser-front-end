@@ -21,3 +21,9 @@
     margin-right: 10px;
     color: #888787;
 }
+.movie-genres{
+    text-decoration: underline;
+    cursor: pointer;
+    margin-right: 10px;
+    color: #f3ce13;
+}

@@ -5,7 +5,6 @@ import Movies from './containers/movies/Movies';
 import Movie from './components/Movie/Movie';
 import MovieTooltip from './components/MovieTooltip/MovieTooltip';
 import Toolbar from './containers/ToolBar/Toolbar';
-import MovieData from './data.json'
 let SERVICE_URL = "http://starlord.hackerearth.com/movieslisting";
 
 class App extends Component {
@@ -64,6 +63,7 @@ class App extends Component {
           allRatings,
           languageFilter: null,
           countryFilter: null,
+          genreFilter: null
         })
       })
       .catch(e => console.log(e));
@@ -122,20 +122,36 @@ class App extends Component {
     this.setState(newState);
   }
 
-  filterMovies = (languageFilter, countryFilter) => {
+  filterMovies = (languageFilter, countryFilter, genreFilter) => {
     let movies = this.state.originalMovies;
     let filteredMovies = [];
     movies.forEach(movie => {
-      if (languageFilter && countryFilter) {
-        if ((movie.language === languageFilter && movie.country === countryFilter)) {
+      if (languageFilter && countryFilter && genreFilter) {
+        if ((movie.language === languageFilter && movie.country === countryFilter && movie.genres.includes(genreFilter))) {
           filteredMovies.push(movie);
         }
-      } else if (languageFilter && !countryFilter) {
+      } else if (languageFilter && !countryFilter && !genreFilter) {
         if ((movie.language === languageFilter)) {
           filteredMovies.push(movie);
         }
-      } else if (countryFilter && !languageFilter) {
-        if ((movie.country === countryFilter)) {
+      }else if (languageFilter && !countryFilter && genreFilter) {
+        if ((movie.genres.includes(genreFilter)) && movie.language === languageFilter) {
+          filteredMovies.push(movie);
+        }
+      }else if (languageFilter && countryFilter && !genreFilter) {
+        if ((movie.languageFilter === languageFilter) && movie.country === countryFilter) {
+          filteredMovies.push(movie);
+        }
+      } else if (!languageFilter && countryFilter && genreFilter) {
+        if (movie.country === countryFilter && (movie.genres.includes(genreFilter))) {
+          filteredMovies.push(movie);
+        }
+      }else if (!languageFilter && !countryFilter && genreFilter) {
+        if (movie.genres.includes(genreFilter)) {
+          filteredMovies.push(movie);
+        }
+      } else if (!languageFilter && countryFilter && !genreFilter) {
+        if (movie.country === countryFilter) {
           filteredMovies.push(movie);
         }
       } else {
@@ -149,6 +165,7 @@ class App extends Component {
       ...this.state,
       languageFilter,
       countryFilter,
+      genreFilter,
       movies: filteredMovieDivs
     })
   }
@@ -157,22 +174,33 @@ class App extends Component {
     switch (type) {
       case "lang":
         if (value === "all") {
-          this.filterMovies(null, this.state.countryFilter);
+          this.filterMovies(null, this.state.countryFilter, this.state.genreFilter);
         } else {
-          this.filterMovies(value, this.state.countryFilter);
+          this.filterMovies(value, this.state.countryFilter, this.state.genreFilter);
         }
         break;
       case "country":
         if (value === "all") {
-          this.filterMovies(this.state.languageFilter, null);
+          this.filterMovies(this.state.languageFilter, null, this.state.genreFilter);
         } else {
-          this.filterMovies(this.state.languageFilter, value);
+          this.filterMovies(this.state.languageFilter, value, this.state.genreFilter);
+        }
+        break;
+      case "genre":
+        if (value === "all") {
+          this.filterMovies(this.state.languageFilter, this.state.countryFilter, null);
+        } else {
+          this.filterMovies(this.state.languageFilter, this.state.countryFilter, value);
         }
         break;
       default:
         this.filterMovies();
         break;
     }
+  }
+
+  genreClicked = (genre) => {
+    this.filterChanged(genre, "genre");
   }
 
   render() {
@@ -184,10 +212,18 @@ class App extends Component {
           allCountries={this.state.allCountries}
           allLanguages={this.state.allLanguages}
           allRatings={this.state.allRatings}
+          genre={this.state.genreFilter}
         ></Toolbar>
-        {this.state.isFetching ? <div className="text-center">Loading</div>: <div className="container">
-          <Movies movies={this.state.movies}></Movies>
-        </div>}
+        {this.state.isFetching ? 
+          <div className="text-center">Loading</div>: 
+          <div className="container">
+            {
+              this.state.movies.length > 0?  
+              <Movies movies={this.state.movies}></Movies>:
+              <div className="text-center">No results! Please change the filters</div>
+            }
+          </div>
+        }
         <MovieTooltip
           movie={this.state.currentMovie}
           display={this.state.display && this.state.currentMovie}
@@ -195,6 +231,7 @@ class App extends Component {
           toolTipTop={this.state.toolTipTop}
           hideToolTip={this.hideToolTip}
           preventHide={this.preventHide}
+          genreClicked = {this.genreClicked}
         ></MovieTooltip>
       </div>
     );

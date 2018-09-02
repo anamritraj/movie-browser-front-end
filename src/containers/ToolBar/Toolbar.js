@@ -6,6 +6,7 @@ export default class Toolbar extends Component {
         return (
             <div className="container-fluid">
                 <div className="Toolbar">
+                    Genre : {this.props.genre ? this.props.genre : "All"}
                     <Filter filterChanged={this.props.filterChanged} type="lang" options={this.props.allLanguages} title="Language"></Filter>
                     <Filter filterChanged={this.props.filterChanged} type="country" options={this.props.allCountries} title="Country"></Filter>
                 </div>
