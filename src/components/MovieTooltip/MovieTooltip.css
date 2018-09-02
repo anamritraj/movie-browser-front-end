@@ -1,0 +1,23 @@
+.MovieTooltip{
+    position: absolute;
+    transition: opacity 0.5s ease 0s;
+    background: #171717;
+    padding: 15px;
+    border: 1px solid #272727;
+    max-width: 400px;
+    min-width: 400px;
+}
+
+.MovieTooltip h2 a{
+    color: #f3ce13;
+}
+.MovieTooltip h2{
+    font-size: 1.3rem;
+}
+.MovieTooltip p{
+    margin-bottom: 5px;
+}
+.top-details span {
+    margin-right: 10px;
+    color: #888787;
+}

@@ -4,13 +4,8 @@ import './Movie.css'
 export default class Movie extends Component {
     render() {
         let movie = this.props.movie;
-        let movieGeneres = movie.genres;
-        let movieGenresArray = movieGeneres.split("|").map((val, index) => {
-            return val;
-        })
-
         return (
-            <div className="col-md-3" onClick={this.props.movieClicked}>
+            <div className="col-md-3" onMouseEnter={(e) => {this.props.movieClicked(movie, e)}} onMouseLeave={this.props.hideToolTip}>
                 <div className="Movie">
                     <div className="topbar">
                         <p className="year">{movie.title_year}</p>
@@ -20,11 +15,6 @@ export default class Movie extends Component {
                         <h2 className="">{movie.movie_title}</h2>
                     </div>
 
-                    {/*
-                    <p className="genre">{movieGenresArray.map((val) => {
-                        return val + ", ";
-                    })}</p>
-                */}
                     <p className="director">{movie.director_name}</p>
                     <p className="imdb-link"><a target="_blank" href={movie.movie_imdb_link}><i className="fab fa-imdb"></i></a></p>
 
