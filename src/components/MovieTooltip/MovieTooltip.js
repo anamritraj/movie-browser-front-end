@@ -12,7 +12,7 @@ export default ({ movie, display, toolTipLeft, toolTipTop, preventHide, hideTool
                 left: toolTipLeft + "px",
                 top: toolTipTop + "px"
             };
-        movieElement = <div className="MovieTooltip" style={styles} onMouseEnter={preventHide} onmouseleave={hideToolTip}>
+        movieElement = <div className="MovieTooltip" style={styles} onMouseEnter={preventHide} onMouseLeave={hideToolTip}>
             <h2>
                 <a href={movie.movie_imdb_link} target="_blank">{movie.movie_title}</a>
                 {movie.title_year ? <span>({movie.title_year})</span> : null}

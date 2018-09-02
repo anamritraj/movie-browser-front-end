@@ -1,0 +1,10 @@
+.Filter{
+    float: right;
+    margin-right: 20px
+}
+.Filter select{
+    margin-left: 5px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-size: .9em;
+}

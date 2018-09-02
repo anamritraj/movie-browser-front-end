@@ -5,7 +5,7 @@ export default class Movie extends Component {
     render() {
         let movie = this.props.movie;
         return (
-            <div className="col-md-3" onMouseEnter={(e) => {this.props.movieClicked(movie, e)}} onMouseLeave={this.props.hideToolTip}>
+            <div className="col-md-3" onMouseEnter={async (e) => {await setTimeout(this.props.movieClicked(movie, e), 1000)}} onMouseLeave={this.props.hideToolTip}>
                 <div className="Movie">
                     <div className="topbar">
                         <p className="year">{movie.title_year}</p>
